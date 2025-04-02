@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react";
 
 function useCurrencyInfo(currency) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const API_KEY = "e5303ef6b4cceaa74997575f";
   useEffect(() => {
-    fetch(
-      `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`
-    )
-      .then((res) => res.json())
-      .then((res) => setData(res[currency]));
-    console.log(data);
+    fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${currency}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((res) => {
+        if (res.conversion_rates) {
+          setData(res.conversion_rates); // Update state with conversion rates
+        } else {
+          throw new Error("Invalid API response structure");
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching currency data:", err);
+        setError(err.message); // Update error state
+      });
   }, [currency]);
-  console.log(data);
   return data;
 }
 
