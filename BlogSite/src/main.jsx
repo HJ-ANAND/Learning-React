@@ -1,5 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
@@ -11,6 +9,8 @@ import { AuthLayout, Login, Post, Signup } from "./components/index.js";
 import AllPosts from "./pages/AllPosts.jsx";
 import AddPost from "./pages/AddPost.jsx";
 import EditPost from "./pages/EditPost.jsx";
+// import Signup from "./pages/Signup.jsx";
+// import Post from "./pages/Post.jsx";
 
 const router = createBrowserRouter([
   {
